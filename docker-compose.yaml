@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  nginx:
+      container_name: nginx
+      build:
+        context: nginx
+        dockerfile: Dockerfile
+      ports:
+        - "8080:2000"
+        - "3000:80"
+      depends_on:
+        - chat
+      networks:
+        main:
+            aliases:
+                - nginx
+  chat:
+      tty: true
+      container_name: chat
+      build:
+        context: chat
+        dockerfile: Dockerfile
+      expose:
+        - "5000"
+      networks:
+        main:
+            aliases:
+                - chat
+networks:
+  main:
+    external: true
+
